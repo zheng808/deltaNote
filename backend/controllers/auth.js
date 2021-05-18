@@ -1,33 +1,30 @@
 const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const sha1 = require('sha1');
+const db = require('../config/database');
 
-const db = mysql.createConnection({ 
-    host: process.env.HOST,
-    database:process.env.DATABASE,
-    user: process.env.DATABASEUSER,
-    password: process.env.DATABASE_PASSWORD
-});
 
 exports.login = async (req, res) =>{
     try{
-        const email = req.body.email;
-        const password = req.body.password;
-        console.log(email);
-        if(!email || !password){
-            return res.status(400).render('login', {
+        var userName = req.body.username;
+        var password = req.body.password;
+        if(!userName || !password){
+            return res.status(400).render('/', {
                 message: "please provide email or password"
             })
         }
-    db.query('Select * from user where email = ?', email, async (error, results) =>{
-        console.log(results);
-        if(!results || !(await bcrypt.compare(password, results[0].password))){
-            return res.status(401).render('login', {
+    db.query('Select * from sf_guard_user where username = ?', userName, async (error, results) =>{
+        const salt = results[0].salt;
+        password = salt + password; 
+        const hashed_password = sha1(password);
+        if(!results || !(hashed_password == results[0].password)){
+            return res.status(401).json({
                 message: "Please provide correct username or password"
             })
         }else{
             //login succesfully
-            const id = results.iduser;
+            const id = results[0].id;
             //create a token
             const token = jwt.sign({id: id}, process.env.JWT_SCRECT, {
               expiresIn: process.env.JWT_EXPIRES_IN
@@ -38,7 +35,7 @@ exports.login = async (req, res) =>{
                 httpOnly: true
             }
             res.cookie('jwt', token, cookieOptions);
-            res.status(200).redirect("/workorder");
+            res.send({token: token});
         }
     });
     }catch(error){

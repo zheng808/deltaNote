@@ -17,14 +17,7 @@ function WorkOrder(){
 
     return (
         <div>
-        {
-            items.map(item =>{
-                <div>
-                    <p>{item.id}</p>
-                    <p>{item.name}</p>
-                </div>
-            })
-        }
+        <h1>Workorder</h1>
         </div>
         
     );
