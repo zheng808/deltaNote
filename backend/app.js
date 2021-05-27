@@ -16,7 +16,7 @@ app.use(express.json());
 
 
 //define routes
-app.use('/', require('./routes/pages'));
+app.use('/api', require('./routes/api'));
 app.use('/auth', require('./routes/auth'));
 app.set('view engine', 'hbs');
 const publicDir = path.join(__dirname, './public');

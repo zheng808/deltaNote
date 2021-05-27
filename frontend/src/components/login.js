@@ -1,35 +1,31 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../App.css';
-import { Redirect, Route } from "react-router";
+import Error from './error';
+   
+export default function Login ({ setToken }){
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
+  const [error, setError] = useState(false);
 
-async function loginUser(credentials) {
+  async function loginUser(credentials) {
     return fetch('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(credentials)
-    }).then(function(response){
-       if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-        }
-        response.json().then(function(data) {
-            
-        });
-    });
-   }
-
-   
-export default function Login ({ setToken, props }){
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+    }).then(response => {
+      if(response.status === 401){
+        setError({error:true});
+      }
+      return response.json();
+   })
+   .catch(error => console.error(error));
+  }    
 
  const handleSubmit = async e => {
-    e.preventDefault();
-    const { history } = this.props;
+    e.preventDefault(); 
     try{
         const token = await loginUser({
             username,
@@ -56,11 +52,14 @@ export default function Login ({ setToken, props }){
                         <div className="login-button">
                             <input type="submit" value="Login" className="btn-login" />
                         </div>
+                        {error && <Error></Error>}
                     </form>
                 </div>
             </div>
     );
 }
+
+
 
 Login.propTypes = {
     setToken: PropTypes.func.isRequired

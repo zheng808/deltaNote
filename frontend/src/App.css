@@ -13,6 +13,16 @@
   }
 }
 
+.container-fluid{
+  background-color: #282c34;
+  color: white;
+  height: 100vh
+}
+
+.forms-container{
+  width: 420px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -67,7 +77,6 @@ form{
   background: none;
   outline: none;
   font-weight: 600;
-  color:#333;
 }
 
 .btn-login{
@@ -88,4 +97,17 @@ form{
   color: #313030;
   transition: 0.5s;
   font-size: 1.1rem;
+}
+
+.error-message{
+  font-size: 14px;
+  font-weight: 600;
+  color: red;
+}
+
+.workorder-header{
+  display: flex;
+  width: 250px;
+  padding-top: 30px;
+  padding-bottom: 15px;
 }
