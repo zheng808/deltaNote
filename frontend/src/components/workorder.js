@@ -1,37 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import { Link, Switch, Route, BrowserRouter } from 'react-router-dom';
-
-var workorders = [{}];
+import { Link, BrowserRouter } from 'react-router-dom';
 
 function WorkOrder(){ 
     const [items, setOrders] = useState([]);
     const [searchTerm, setSearchTerm] = useState ("");
     const [searchResults, setSearchResults] = useState([]);
+    const [workorders, setWorkOrders] = useState([]);
     
     //get workorders
     useEffect(()=>{
+        const fetchOrders = async () =>{
+            try{
+                let data = await fetch('/api/workorder');
+                let items = await data.json();
+                setWorkOrders(items)
+                setOrders(items)
+            }catch(err){
+                console.log(err);
+            }
+            
+        };
         fetchOrders();
     }, []);
 
-    const fetchOrders = async () =>{
-        try{
-
-            let data = await fetch('/api/workorder');
-            let items = await data.json();
-            workorders = items;
-            console.log(items);
-            setOrders(items)
-        }catch(err){
-            console.log(err);
-        }
-        
-    };
-
+    //search
     useEffect(()=>{
         const results = workorders.filter((workorder) => {
             if(workorder.id == searchTerm){
                 return workorder;
             }
+            return null;
         });
         setSearchResults(results);
     }, [searchTerm]);
@@ -44,7 +42,7 @@ function WorkOrder(){
     return (
         <BrowserRouter forceRefresh={true}>
         <div className="container">
-        <div className="workorder-header">
+        <div className="container-header">
         <input className="form-control" type="text" placeholder="Search WorkOrder" value={searchTerm} onChange={handleChange}/>
         </div>
         <table className="table table-dark table-hover">

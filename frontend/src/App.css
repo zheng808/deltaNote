@@ -1,3 +1,7 @@
+body{
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
 }
@@ -14,9 +18,7 @@
 }
 
 .container-fluid{
-  background-color: #282c34;
   color: white;
-  height: 100vh
 }
 
 .forms-container{
@@ -61,7 +63,7 @@
   margin: 10px 0;
 }
 
-form{
+.sign-in-form{
   display: flex;
   align-self: center;
   justify-content: center;
@@ -98,16 +100,77 @@ form{
   transition: 0.5s;
   font-size: 1.1rem;
 }
-
 .error-message{
   font-size: 14px;
   font-weight: 600;
   color: red;
 }
 
-.workorder-header{
+
+.task-header{
   display: flex;
   width: 250px;
   padding-top: 30px;
   padding-bottom: 15px;
+}
+
+.home-icon{
+  font-size: 45px;
+  color: #ffffff;
+  
+}
+
+.home-icon:hover{
+  cursor: pointer;
+}
+
+.left-button{
+  font-size: 45px;
+  color: #ffffff;
+  display: flex;
+  padding-left: 45px;
+}
+
+.left-button:hover{
+   cursor: pointer;
+}
+
+.container-header{
+  display: flex;
+  width: 250px;
+  padding-top: 30px;
+  padding-bottom: 35px;
+}
+
+#notes-editor{
+  height: 300px;
+  width: 500px;
+}
+
+.save_note{
+  width: 150px;
+}
+
+.notes-section{
+  margin-top: 30px;
+}
+
+.detail-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.note-textarea{
+   width: 500px;
+   height: 300px;
+}
+
+.write-note-section{
+   padding:none !important;
+   margin-bottom: 20px;
+}
+
+.save_note{
+  
 }

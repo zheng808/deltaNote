@@ -5,7 +5,7 @@ import Login from './components/login';
 import WorkOrder from './components/workorder';
 import Task from './components/task';
 import useToken from './helper/useToken';
-
+import Notes from './components/note';
 
 
 const App = () => {
@@ -28,6 +28,8 @@ const App = () => {
                 <WorkOrder />
                 </Route>
                 <Route path="/task/:id" component={Task}>
+                </Route>
+                <Route path="/notes/:id" component={Notes}>
                 </Route>
                 </Switch>
               </div>

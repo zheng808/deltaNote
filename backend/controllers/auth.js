@@ -7,7 +7,7 @@ const db = require('../config/database');
 
 exports.login = async (req, res) =>{
     try{
-        var userName = req.body.username;
+        var userName = req.body.user;
         var password = req.body.password;
         if(!userName || !password){
             return res.status(400).render('/', {
