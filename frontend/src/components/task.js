@@ -18,7 +18,6 @@ function Task({match}){
               console.log(error);
             })
           let tasks = await response.data;
-          console.log(tasks);
           setTasks(tasks);
           
       }catch(err){
@@ -26,7 +25,7 @@ function Task({match}){
       }
     };
     fetchTasks(); 
-    }, []);
+    }, [match.params.id]);
 
    
 

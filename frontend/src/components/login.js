@@ -6,8 +6,6 @@ import Error from './error';
 import {useForm} from '../helper/useForm';
    
 export default function Login ({ setToken }){
-  //const [username, setUserName] = useState();
-  //const [password, setPassword] = useState();
   const [values, handleChange] = useForm({user:'', password:''});
   const [error, setError] = useState(false);
 
@@ -34,7 +32,6 @@ export default function Login ({ setToken }){
  const handleSubmit = async e => {
     e.preventDefault(); 
     try{
-      console.log(values);
         const token = await loginUser(
           values
           );

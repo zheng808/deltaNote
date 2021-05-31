@@ -18,6 +18,7 @@ function Notes({match}){
             let task_id = match.params.id;
             let useName = sessionStorage.getItem('userName');
             let newDate = new Date().toISOString().slice(0, 19).replace('Z','').replace('T', ' ');
+            
             await axios.post("/api/notes/saveNotes", {
                 text: new_note,
                 created_time: newDate,
@@ -26,7 +27,7 @@ function Notes({match}){
             })
             .then((result)=>{
                console.log(result);
-               if(result.status!=200){
+               if(result.status!==200){
                    console.log('bad request')
                }
                setNotes([...result.data]);
@@ -61,7 +62,7 @@ function Notes({match}){
             }
           };
           fetchNotes();
-    }, []);
+    }, [match.params.id]);
     
     return (
         <div className="container">
@@ -72,7 +73,9 @@ function Notes({match}){
             <form onSubmit={handleSubmit} className="write-note-section"> 
             <div className="form-group">
                 <textarea className="form-control" id="notes-editor" name="notes" onChange={handleChange}></textarea>
+                <div className="save-button-wrapper">
                 <button type="submit" className="btn btn-primary save_note">Save Note</button>
+                </div>
             </div>
             </form>
 

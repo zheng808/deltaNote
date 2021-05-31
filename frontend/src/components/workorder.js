@@ -26,13 +26,13 @@ function WorkOrder(){
     //search
     useEffect(()=>{
         const results = workorders.filter((workorder) => {
-            if(workorder.id == searchTerm){
+            if(workorder.id.toString() === searchTerm){
                 return workorder;
             }
             return null;
         });
         setSearchResults(results);
-    }, [searchTerm]);
+    }, [workorders,searchTerm]);
     
     const handleChange = event =>{
         setSearchTerm(event.target.value);
@@ -48,13 +48,14 @@ function WorkOrder(){
         <table className="table table-dark table-hover">
         <thead>
           <tr>
+            <th scope="col">WorkOrder ID</th>
             <th scope="col">Name</th>
             <th scope="col">BoatName</th>
             <th scope="col">Customer Name</th>
           </tr>
         </thead>
         <tbody>
-        {searchResults.length == 0?
+        {searchResults.length === 0?
         items.map(item => (
             <tr key={item.id}>
             <td><Link to={`/task/${item.id}`}>{item.id}</Link></td>

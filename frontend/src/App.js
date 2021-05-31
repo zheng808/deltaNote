@@ -6,7 +6,7 @@ import WorkOrder from './components/workorder';
 import Task from './components/task';
 import useToken from './helper/useToken';
 import Notes from './components/note';
-
+import {UserContext} from './helper/UserContext';
 
 const App = () => {
      
@@ -27,10 +27,12 @@ const App = () => {
                 <Route path="/workorder">
                 <WorkOrder />
                 </Route>
+                <UserContext.Provider>
                 <Route path="/task/:id" component={Task}>
                 </Route>
                 <Route path="/notes/:id" component={Notes}>
                 </Route>
+                </UserContext.Provider>
                 </Switch>
               </div>
           </div>
