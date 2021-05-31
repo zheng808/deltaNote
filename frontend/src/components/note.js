@@ -13,33 +13,38 @@ function Notes({match}){
         saveNotes(value);
     }
 
-    
-
-    const handleSubmit = async e => {
-        e.preventDefault(); 
+    const saveNote = async () =>{
         try{
             let task_id = match.params.id;
-            console.log(task_id);
-            var useName = sessionStorage.getItem('userName');
-            var newDate = new Date().toISOString().slice(0, 19).replace('Z','').replace('T', ' ');
-            console.log(newDate);
+            let useName = sessionStorage.getItem('userName');
+            let newDate = new Date().toISOString().slice(0, 19).replace('Z','').replace('T', ' ');
             await axios.post("/api/notes/saveNotes", {
                 text: new_note,
                 created_time: newDate,
                 owner: useName,
                 task_id: task_id
             })
-            .then((result)=>saveNotes(result))
-            .catch((err) => console.log(err))
+            .then((result)=>{
+               console.log(result);
+               if(result.status!=200){
+                   console.log('bad request')
+               }
+               setNotes([...result.data]);
+               
+            }).catch((err) => console.log(err))
         }catch(e) {
             alert(e.message);
         }  
+    }
+
+    const handleSubmit = async e => {
+        e.preventDefault(); 
+        saveNote();
     }
     
     useEffect(()=>{
         const fetchNotes = async () =>{   
             try{
-                console.log('222333333');
                  let id = match.params.id;
                  let response = await axios.post(`/api/notes/${id}`,{
                     task_id:id
