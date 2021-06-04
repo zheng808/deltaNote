@@ -1,11 +1,17 @@
 import React, {useState, useEffect } from 'react';
-import {Link, BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import HomeButton from './hombutton';
 import BackButton from './backbutton';
 
 function Task({match}){
    const [tasks, setTasks] = useState([]);
+
+   const history = useHistory();
+   const handleRowClick = (task) => {
+       history.push(`/notes/${task.id}`);
+   }  
+
    useEffect(()=>{
     const fetchTasks = async () =>{   
       try{
@@ -30,7 +36,7 @@ function Task({match}){
    
 
     return (
-      <BrowserRouter forceRefresh={true}>
+      <BrowserRouter>
       <div className="container">
         <div className="container-header">
           <HomeButton/>
@@ -46,8 +52,8 @@ function Task({match}){
         <tbody>
         {
           tasks.map(task => (
-            <tr key={task.id}>
-            <td><Link to={`/notes/${task.id}`}>{task.id}</Link></td>
+            <tr key={task.id} onClick={()=>handleRowClick(task)}>
+            <td>{task.id}</td>
             <td>{task.label}</td>
          </tr>
          ))

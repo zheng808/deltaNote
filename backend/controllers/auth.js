@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sha1 = require('sha1');
-const db = require('../config/database');
+const knex = require('../config/database');
 
 
 exports.login = async (req, res) =>{
@@ -14,17 +14,18 @@ exports.login = async (req, res) =>{
                 message: "please provide email or password"
             })
         }
-    db.query('Select * from sf_guard_user where username = ?', userName, async (error, results) =>{
-        const salt = results[0].salt;
+    knex('sf_guard_user').where('username', userName).then((response) =>{
+        const salt = response[0].salt;
+        console.log(salt);
         password = salt + password; 
         const hashed_password = sha1(password);
-        if(!results || !(hashed_password == results[0].password)){
+        if(!response || !(hashed_password == response[0].password)){
             return res.status(401).json({
                 message: "Please provide correct username or password"
             })
         }else{
             //login succesfully
-            const id = results[0].id;
+            const id = response[0].id;
             //create a token
             const token = jwt.sign({id: id}, process.env.JWT_SCRECT, {
               expiresIn: process.env.JWT_EXPIRES_IN

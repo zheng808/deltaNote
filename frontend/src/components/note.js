@@ -26,9 +26,8 @@ function Notes({match}){
                 task_id: task_id
             })
             .then((result)=>{
-               console.log(result);
                if(result.status!==200){
-                   console.log('bad request')
+                   console.log('bad request');
                }
                setNotes([...result.data]);
                

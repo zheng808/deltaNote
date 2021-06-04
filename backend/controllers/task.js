@@ -1,10 +1,10 @@
-const db = require('../config/database');
+const knex = require('../config/database');
 
 exports.tasks = async (req, res) =>{
      try{
          var workID = req.body.workId;
-         db.query('select id, label from workorder_item where workorder_id = ? and label!= ?;', [workID, ''],  (error, results) =>{
-          res.end(JSON.stringify(results));
+         knex.select('id', 'label').from('workorder_item').where('workorder_id', workID).andWhere('label', '!=', '').then((response)=>{
+            res.end(JSON.stringify(response));
          });
      }catch(error){
          console.log(error);

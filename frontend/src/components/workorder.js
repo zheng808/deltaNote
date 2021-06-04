@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 
 function WorkOrder(){ 
     const [items, setOrders] = useState([]);
@@ -7,6 +7,11 @@ function WorkOrder(){
     const [searchResults, setSearchResults] = useState([]);
     const [workorders, setWorkOrders] = useState([]);
     
+    const history = useHistory();
+    const handleRowClick = (item) => {
+        history.push(`/task/${item.id}`);
+    }  
+
     //get workorders
     useEffect(()=>{
         const fetchOrders = async () =>{
@@ -40,7 +45,7 @@ function WorkOrder(){
 
 
     return (
-        <BrowserRouter forceRefresh={true}>
+        <BrowserRouter>
         <div className="container">
         <div className="container-header">
         <input className="form-control" type="text" placeholder="Search WorkOrder" value={searchTerm} onChange={handleChange}/>
@@ -49,7 +54,6 @@ function WorkOrder(){
         <thead>
           <tr>
             <th scope="col">WorkOrder ID</th>
-            <th scope="col">Name</th>
             <th scope="col">BoatName</th>
             <th scope="col">Customer Name</th>
           </tr>
@@ -57,15 +61,15 @@ function WorkOrder(){
         <tbody>
         {searchResults.length === 0?
         items.map(item => (
-            <tr key={item.id}>
-            <td><Link to={`/task/${item.id}`}>{item.id}</Link></td>
+            <tr onClick={()=>handleRowClick(item)} key={item.id}>
+            <td>{item.id}</td>
             <td>{item.name}</td>
             <td>{item.alpha_name}</td>
          </tr>
         )):
         searchResults.map(item => (
-          <tr key={item.id}>
-          <td><Link to={`/task/${item.id}`}>{item.id}</Link></td>
+          <tr onClick={()=>handleRowClick(item)} key={item.id}>
+          <td>{item.id}</td>
           <td>{item.id}</td>
           <td>{item.name}</td>
           <td>{item.alpha_name}</td>
