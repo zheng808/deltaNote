@@ -69,25 +69,28 @@ function Notes({match}){
                 <HomeButton/>
                 <BackButton/>
             </div>
-            <form onSubmit={handleSubmit} className="write-note-section"> 
-            <div className="form-group">
+            <div className="row">
+            <form  onSubmit={handleSubmit} className="write-note-section"> 
+            <div className="form-group col-sm-12" >
                 <textarea className="form-control" id="notes-editor" name="notes" onChange={handleChange}></textarea>
                 <div className="save-button-wrapper">
                 <button type="submit" className="btn btn-primary save_note">Save Note</button>
                 </div>
             </div>
             </form>
-
+            </div>
+            <div className="row">
             <div className="notes-section">
             {   
           
                 notes.map(note =>(
-                <div key={note.id} className="detail-section">
+                <div key={note.id} className="detail-section col-sm-12">
                  <p >{new Date(note.date_created).toLocaleString()} created by {note.owner}</p>
-                <textarea disabled defaultValue={note.text} className="note-textarea"></textarea>
+                <textarea disabled defaultValue={note.text} className="note-textarea " row={3}></textarea>
                 </div>
                 ))
             }
+            </div>
             </div>
         </div>
     );

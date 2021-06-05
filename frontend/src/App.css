@@ -6,12 +6,6 @@ body{
   text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .container-fluid{
   color: white;
 }
@@ -136,12 +130,6 @@ body{
   padding-top: 30px;
   padding-bottom: 35px;
 }
-@media screen and (max-width: 768px){
-  #notes-editor{
-    height: 300px;
-    width: 400px;
-  }
-}
 
 
 .save_note{
@@ -158,16 +146,11 @@ body{
   justify-content: flex-start;
 }
 
-@media screen and (max-width: 1060px){
-  .note-textarea{
-    resize: both;
-    min-height: 100px;
-    width:400px;
-  }
-}
+
 
 .write-note-section{
    margin-bottom: 20px;
+   min-width: 300px;
 }
 
 .save-button-wrapper{
@@ -182,4 +165,39 @@ body{
 
 tr:hover{
   cursor: pointer;
+}
+
+ #notes-editor{
+  height: 300px;
+}
+
+#notes-editor{
+  height: 250px;
+  width: 450px;
+}
+
+.note-textarea{
+  min-height:120px;
+  width: 450px;
+}
+
+@media screen and (min-width:320px) and (max-width:640px) {
+  #notes-editor{
+    height: 250px;
+    width: 350px;
+  }
+
+  .note-textarea{
+    max-height:90px;
+    width: 350px;
+  }
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
 }
