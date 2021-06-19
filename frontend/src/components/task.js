@@ -36,29 +36,29 @@ function Task({match}){
    
 
     return (
-      <BrowserRouter>
+      <BrowserRouter forceRefresh={true}>
       <div className="container">
         <div className="container-header">
           <HomeButton/>
           <BackButton/>
         </div>
-        <table className="table table-dark table-hover">
+        <table className="table table-hover table-bordered">
         <thead>
-          <tr>
+          <tr className="table-primary">
             <th scope="col">TaskID</th>
             <th scope="col">Label</th>
           </tr>
         </thead>
         <tbody>
         {
-          tasks.map(task => (
+          tasks.map((task, index) => (
             <tr key={task.id} onClick={()=>handleRowClick(task)}>
-            <td>{task.id}</td>
+            <td>{index}</td>
             <td>{task.label}</td>
          </tr>
          ))
         }
-
+       
        </tbody>
         </table>
       </div>

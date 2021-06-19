@@ -50,9 +50,9 @@ function WorkOrder(){
         <div className="container-header">
         <input className="form-control" type="text" placeholder="Search WorkOrder" value={searchTerm} onChange={handleChange}/>
         </div>
-        <table className="table table-dark table-hover">
+        <table className="table table-hover table-bordered">
         <thead>
-          <tr>
+          <tr className="table-primary">
             <th scope="col">WorkOrder ID</th>
             <th scope="col">BoatName</th>
             <th scope="col">Customer Name</th>
@@ -69,7 +69,6 @@ function WorkOrder(){
         )):
         searchResults.map(item => (
           <tr onClick={()=>handleRowClick(item)} key={item.id}>
-          <td>{item.id}</td>
           <td>{item.id}</td>
           <td>{item.name}</td>
           <td>{item.alpha_name}</td>

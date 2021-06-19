@@ -12,7 +12,7 @@ exports.workorder = async (req, res) =>{
                          .where('status', 'In Progress')
                          .orderBy('id', 'desc').then((response) =>{
                             if(cache.length == 0 ){
-                                cache = response; 
+                                cache = response;
                             }
                             res.end(JSON.stringify(cache));
         });

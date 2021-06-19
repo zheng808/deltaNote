@@ -1,5 +1,5 @@
 body{
-  background-color: #282c34;
+  background-color: #f1efef;
 }
 
 .App {
@@ -105,7 +105,7 @@ body{
 
 .home-icon{
   font-size: 45px;
-  color: #ffffff;
+  color: #5995fd;
   
 }
 
@@ -115,7 +115,7 @@ body{
 
 .left-button{
   font-size: 45px;
-  color: #ffffff;
+  color: #5995fd;
   display: flex;
   padding-left: 45px;
 }
@@ -200,4 +200,32 @@ tr:hover{
   resize: both;
   min-height: 40px;
   line-height: 20px;
+}
+
+.form-control{
+  border: 2px solid #b6b3b3;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+}
+
+table{
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th{
+  font-weight: 600;
+  font-family: "Consolas";
+  font-size: 20px
+}
+
+td{
+  font-weight: 500px;
+  font-family: "Consolas";
+  font-size: 18px;
+}
+
+p{
+  font-weight: 500px;
+  font-family: "Consolas";
+  font-size: 18px;
+  color: #252525;
 }
