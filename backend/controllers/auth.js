@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const sha1 = require('sha1');
 const knex = require('../config/database');
-
+const mysql = require("mysql");
+const bcrypt = require("bcryptjs");
 
 exports.login = async (req, res) =>{
     try{
