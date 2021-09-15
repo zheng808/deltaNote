@@ -7,11 +7,42 @@ import BackButton from './backbutton';
 function Notes({match}){
     const [notes, setNotes] = useState([]);
     const [new_note, saveNotes] = useState("");
-    
+    const [file, setImage] = useState('');
+    const [uploadedFile, setUploadedFile] = useState({});
+
     const handleChange =  e => {
         const value = e.target.value;
         saveNotes(value);
     }
+
+    //file load
+    const handleFileChange = e =>{
+        setImage(e.target.files[0]);
+    }
+
+    const upload = async() =>{
+        const formData = new FormData();
+        let task_id = match.params.id;
+        formData.append('file', file);
+        try {
+        await axios.post('/api/notes/uploadImage', formData,{
+        }).then((res)=>{
+            const { fileName, filePath } = res.data;
+            setUploadedFile({ fileName, filePath });
+        }).catch((err) => console.log(err))
+        } catch (err) {
+            if (err.response.status === 500) {
+                console.log('There was a problem with the server');
+            } else {
+                console.log(err.response.data.msg);
+            }
+        }
+    }
+
+    const handleUpload = async e =>{
+        e.preventDefault();
+        upload();
+    };
 
     const saveNote = async () =>{
         try{
@@ -69,6 +100,20 @@ function Notes({match}){
                 <HomeButton/>
                 <BackButton/>
             </div>
+            <div className="row">
+                <form onSubmit={handleUpload}>
+                    <input type="file" name="file" onChange={handleFileChange}></input>
+                    <button type="submit" className="btn btn-primary">Upload Image</button>
+                </form>
+            </div>
+            {uploadedFile ? (
+                <div className='row mt-5'>
+                <div className='col-md-6 m-auto'>
+                    <h3 className='text-center'>{uploadedFile.fileName}</h3>
+                    <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
+                </div>
+                </div>
+            ) : null}
             <div className="row">
             <form  onSubmit={handleSubmit} className="write-note-section"> 
             <div className="form-group col-sm-12" >

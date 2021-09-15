@@ -34,3 +34,18 @@ exports.saveNotes = async(req, res) =>{
         console.log(error);
     }
 }
+
+exports.uploadImage = async(req, res) =>{
+    if(req.files == null){
+        return res.status(400).json({msg: "not file uploaded"});
+    }
+    const file = req.files.file;
+    file.mv(`../frontend/public/uploads/${file.name}`, err => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+        var response = { fileName: file.name, filePath: `/uploads/${file.name}` };
+        res.json(response);
+    });
+}
