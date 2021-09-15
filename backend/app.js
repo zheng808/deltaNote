@@ -25,6 +25,12 @@ app.use(express.static(publicDir));
 app.use(express.static(img));
 app.use(cookieParser);
 
+// app.use(express.static(path.join(__dirname, 'build')));
+// console.log(path.join(__dirname, 'build', 'index.html'));
+// app.get('/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
+
 app.use(cors());
 
 const PORT = 4000;
