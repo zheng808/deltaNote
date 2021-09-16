@@ -7,7 +7,7 @@ import BackButton from './backbutton';
 function Notes({match}){
     const [notes, setNotes] = useState([]);
     const [new_note, saveNotes] = useState("");
-    const [file, setImage] = useState('');
+    const [file, setImage] = useState([]);
     const [uploadedFile, setUploadedFile] = useState({});
 
     const handleChange =  e => {
@@ -23,7 +23,12 @@ function Notes({match}){
     const upload = async() =>{
         const formData = new FormData();
         let task_id = match.params.id;
+        let useName = sessionStorage.getItem('userName');
+        let newDate = new Date().toISOString().slice(0, 19).replace('Z','').replace('T', ' ');
         formData.append('file', file);
+        formData.append('taskID', task_id);
+        formData.append('owner', useName);
+        formData.append('created_time', newDate);
         try {
         await axios.post('/api/notes/uploadImage', formData,{
         }).then((res)=>{
@@ -102,7 +107,7 @@ function Notes({match}){
             </div>
             <div className="row">
                 <form onSubmit={handleUpload}>
-                    <input type="file" name="file" onChange={handleFileChange}></input>
+                    <input type="file" name="file" onChange={handleFileChange} multiple></input>
                     <button type="submit" className="btn btn-primary">Upload Image</button>
                 </form>
             </div>
@@ -131,7 +136,8 @@ function Notes({match}){
                 notes.map(note =>(
                 <div key={note.id} className="detail-section col-sm-12">
                  <p >{new Date(note.date_created).toLocaleString()} created by {note.owner}</p>
-                <textarea disabled defaultValue={note.text} className="note-textarea " row={3}></textarea>
+                 <img style={{ width: '50%', height: '50%', margin: '10px' }} src={note.path} alt='' />
+                {note.text?<textarea disabled defaultValue={note.text} className="note-textarea " row={3}></textarea>:null}
                 </div>
                 ))
             }

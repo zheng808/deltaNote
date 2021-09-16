@@ -23,7 +23,7 @@ const App = () => {
     <div className="App">
               <div className="container-fluid">
                 <Switch>
-                <Route path="/">
+                <Route path="/workorder">
                 <WorkOrder />
                 </Route>
                 <Route path="/task/:id" component={Task}>

@@ -62,7 +62,7 @@ module.exports = function (proxy, allowedHost) {
     // updated. The WebpackDevServer client is included as an entry point
     // in the webpack development configuration. Note that only changes
     // to CSS are currently hot reloaded. JS changes will refresh the browser.
-    hot: true,
+    hot: false,
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
     // websockets in `webpackHotDevClient`.
     transportMode: 'ws',
@@ -88,7 +88,7 @@ module.exports = function (proxy, allowedHost) {
     // src/node_modules is not ignored to support absolute imports
     // https://github.com/facebook/create-react-app/issues/1065
     watchOptions: {
-      ignored: [ignoredFiles(paths.public), ignoredFiles(paths.appSrc)]
+      ignored: [ignoredFiles(paths.appImage), ignoredFiles(paths.appSrc)]
     },
     https: getHttpsConfig(),
     host,
