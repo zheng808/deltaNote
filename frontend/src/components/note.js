@@ -3,11 +3,10 @@ import axios from 'axios';
 import HomeButton from './hombutton';
 import BackButton from './backbutton';
 
-
 function Notes({match}){
     const [notes, setNotes] = useState([]);
     const [new_note, saveNotes] = useState("");
-    const [file, setImage] = useState([]);
+    const [files, setImage] = useState([]);
     const [uploadedFile, setUploadedFile] = useState({});
 
     const handleChange =  e => {
@@ -16,21 +15,30 @@ function Notes({match}){
     }
 
     //file load
-    const handleFileChange = e =>{
-        setImage(e.target.files[0]);
+    const handleFileChange = (e) =>{
+        setImage(e.target.files);  
     }
+
 
     const upload = async() =>{
         const formData = new FormData();
         let task_id = match.params.id;
         let useName = sessionStorage.getItem('userName');
         let newDate = new Date().toISOString().slice(0, 19).replace('Z','').replace('T', ' ');
-        formData.append('file', file);
+        if(files.length > 5){
+            alert("Can not upload more than 5 images")
+        }
+        for(let i = 0; i < files.length; i++){
+            formData.append('file', files[i]);
+        }
         formData.append('taskID', task_id);
         formData.append('owner', useName);
         formData.append('created_time', newDate);
         try {
-        await axios.post('/api/notes/uploadImage', formData,{
+        return await axios.post('/api/notes/uploadImage', formData,{
+            header:{
+                'Content-Type': 'multipart/form-data'
+            }
         }).then((res)=>{
             const { fileName, filePath } = res.data;
             setUploadedFile({ fileName, filePath });
@@ -107,7 +115,7 @@ function Notes({match}){
             </div>
             <div className="row">
                 <form onSubmit={handleUpload}>
-                    <input type="file" name="file" onChange={handleFileChange} multiple></input>
+                    <input className="upload-image-input" type="file" name="file" onChange={handleFileChange} multiple></input>
                     <button type="submit" className="btn btn-primary">Upload Image</button>
                 </form>
             </div>
@@ -115,7 +123,7 @@ function Notes({match}){
                 <div className='row mt-5'>
                 <div className='col-md-6 m-auto'>
                     <h3 className='text-center'>{uploadedFile.fileName}</h3>
-                    <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
+                    <img style={{ width: '50%', height: '50%'}} src={uploadedFile.filePath} alt='' />
                 </div>
                 </div>
             ) : null}

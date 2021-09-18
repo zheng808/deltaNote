@@ -1,5 +1,6 @@
 const knex = require('../config/database');
 
+
 exports.getNotes = async (req, res) =>{
      try{
         let taskId = req.body.task_id;
@@ -38,20 +39,26 @@ exports.uploadImage = async(req, res) =>{
     if(req.files == null){
         return res.status(400).json({msg: "not file uploaded"});
     }
-    const file = req.files.file;
-    const taskID = req.body.taskID;
-    const owner_data = req.body.owner;
-    const fileName = taskID + '_' + file.name;
-    const create_time_data = req.body.created_time;
-    file.mv(`../frontend/public/uploads/${fileName}`, err => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
+    var response = [];
+    for(let i = 0; i<req.files.file.length; i++){
+        const file = req.files.file[i];
+        const taskID = req.body.taskID;
+        const owner_data = req.body.owner;
+        const fileName = taskID + '_' + file.name;
+        const create_time_data = req.body.created_time;
+        file.mv(`../frontend/public/uploads/${fileName}`, err => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send(err);
+        }
         knex('notes').insert({text:"", owner: owner_data, date_created:create_time_data, task_id: taskID, path: `/uploads/${fileName}`}).then(()=>{
-            var response = { fileName: file.name, filePath: `/uploads/${fileName}` };
-            res.json(response);
-        })
-        
-    });
+                response.push({ fileName: file.name, filePath: `/uploads/${fileName}` });
+                if(i == req.files.file.length - 1){
+                    res.json(response);
+                }
+            })
+
+        });
+    }
+    
 }
