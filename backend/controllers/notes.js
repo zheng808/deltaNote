@@ -40,12 +40,15 @@ exports.uploadImage = async(req, res) =>{
         return res.status(400).json({msg: "not file uploaded"});
     }
     var response = [];
-    for(let i = 0; i<req.files.file.length; i++){
-        const file = req.files.file[i];
+    const myFile = (Array.isArray(req.files.file)?req.files.file:[req.files.file]).filter(e=>e);
+    
+    for(let i = 0; i<myFile.length; i++){
+        const file = myFile[i];
         const taskID = req.body.taskID;
         const owner_data = req.body.owner;
         const fileName = taskID + '_' + file.name;
         const create_time_data = req.body.created_time;
+        file.mv(`../../delta/deltamarine/web/images/uploads/${fileName}`);
         file.mv(`../frontend/public/uploads/${fileName}`, err => {
         if (err) {
           console.error(err);
