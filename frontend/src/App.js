@@ -23,6 +23,9 @@ const App = () => {
     <div className="App">
               <div className="container-fluid">
                 <Switch>
+                <Route exact path="/">
+                <WorkOrder />
+                </Route>
                 <Route path="/workorder">
                 <WorkOrder />
                 </Route>
